@@ -5,18 +5,16 @@
 
 class LinearRegression {
 private:
-    double weight;
+    std::vector<double> weights;
     double bias;
 
 public:
-    LinearRegression() : weight(0), bias(0) {}
-    double predict(double xValue) const;
-    void setParameters(double weight, double bias);
-    double getWeight() const;
+    LinearRegression() : bias(0) {}
+    double predict(const std::vector<double>& x) const;
+    void setParameters(const std::vector<double>& weights, double bias);
+    std::vector<double> getWeights() const;
     double getBias() const;
-    double computeCost(const std::vector<double>& x, const std::vector<double>& y) const;
-
+    double computeCost(const std::vector<std::vector<double>>& X, const std::vector<double>& y) const;
 };
 
 #endif // LINEARREGRESSION_H
-

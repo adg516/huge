@@ -11,7 +11,7 @@ private:
 // lr = learning rate = alpha
 public:
     GradientDescent(float lr) : learningRate(lr) {}
-    void fit(LinearRegression& model, const std::vector<double>& x, const std::vector<double>& y, int iterations);
+    void fit(LinearRegression& model, const std::vector<std::vector<double>>& x, const std::vector<double>& y, int iterations);
 };
 
 #endif // GRADIENTDESCENT_H

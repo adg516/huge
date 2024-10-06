@@ -1,36 +1,33 @@
 #include "LinearRegression.h"
 #include <cmath>
 
-double LinearRegression::predict(double xValue) const {
-    return weight * xValue + bias;
+double LinearRegression::predict(const std::vector<double>& x) const {
+    double prediction = bias;
+    for (size_t i = 0; i < weights.size(); ++i) {
+        prediction += weights[i] * x[i];
+    }
+    return prediction;
 }
 
-void LinearRegression::setParameters(double newWeight, double newBias) {
-    weight = newWeight;
+void LinearRegression::setParameters(const std::vector<double>& newWeights, double newBias) {
+    weights = newWeights;
     bias = newBias;
 }
 
-double LinearRegression::getWeight() const {
-    return weight;
+std::vector<double> LinearRegression::getWeights() const {
+    return weights;
 }
 
 double LinearRegression::getBias() const {
     return bias;
 }
 
-// Cost function J
-// J(w,b) = (fwb(xi) - y(i))^2/2n
-// Difference between prediction and actual value squared, all over 2n
-double LinearRegression::computeCost(const std::vector<double>& x, const std::vector<double>& y) const {
-    int n = x.size();
-    double totalError = 0;
-
-    for(int i=0; i<n; i++) {
-        double prediction = predict(x[i]);
+double LinearRegression::computeCost(const std::vector<std::vector<double>>& X, const std::vector<double>& y) const {
+    int n = y.size();
+    double totalError = 0.0;
+    for (int i = 0; i < n; ++i) {
+        double prediction = predict(X[i]);
         totalError += std::pow(prediction - y[i], 2);
     }
-
-    return totalError / (2*n);
+    return totalError / (2 * n);
 }
-
-
