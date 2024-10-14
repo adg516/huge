@@ -1,5 +1,7 @@
-#include "GradientDescent.h"
 #include <iostream>
+#include <vector>
+#include "GradientDescent.h"
+#include "ZScoreNormalization.h"
 
 void GradientDescent::fit(LinearRegression& model, const std::vector<std::vector<double>>& X, const std::vector<double>& y, int iterations) {
     int n = y.size();
@@ -7,6 +9,8 @@ void GradientDescent::fit(LinearRegression& model, const std::vector<std::vector
     
     std::vector<double> w(features, 0.0);
     double b = model.getBias();
+
+    costs.clear(); // Clear previous costs
 
     for (int i = 0; i < iterations; ++i) {
         std::vector<double> dj_dw(features, 0.0);
@@ -31,11 +35,17 @@ void GradientDescent::fit(LinearRegression& model, const std::vector<std::vector
         }
         b -= learningRate * dj_db;
 
+        double cost = model.computeCost(X, y);
+        costs.push_back(cost);
+
         if (i % 100 == 0) {
-            double cost = model.computeCost(X, y);
             std::cout << "Iteration " << i << ": Cost = " << cost << std::endl;
         }
     }
 
     model.setParameters(w, b);
+}
+
+std::vector<double> GradientDescent::getCosts() const {
+    return costs;
 }

@@ -7,11 +7,16 @@
 class GradientDescent {
 private:
     float learningRate;
+    std::vector<double> costs; // To store the cost at each iteration
 
-// lr = learning rate = alpha
 public:
     GradientDescent(float lr) : learningRate(lr) {}
-    void fit(LinearRegression& model, const std::vector<std::vector<double>>& x, const std::vector<double>& y, int iterations);
+
+    // Fits the LinearRegression model using gradient descent
+    void fit(LinearRegression& model, const std::vector<std::vector<double>>& X, const std::vector<double>& y, int iterations);
+
+    // Returns the history of costs for plotting
+    std::vector<double> getCosts() const;
 };
 
 #endif // GRADIENTDESCENT_H
